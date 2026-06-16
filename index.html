@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes,viewport-fit=cover"/>
+<title>DailyFinance Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Sora:wght@700;800;900&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<div class="app">
+
+<!-- GLOBAL SIDEBAR (desktop only) -->
+<div id="global-sidebar">
+  <!-- Toggle button -->
+  <div class="sidebar-toggle" id="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle sidebar">‹</div>
+
+  <!-- Brand -->
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18v2H3zM3 11h12v2H3zM3 16h8v2H3z" fill="white" opacity=".9"/><path d="M19 15v6M16 18h6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+    <div class="sidebar-brand-txt">Daily<em>Finance</em><br><span style="font-size:9px;font-weight:600;color:var(--tx3);letter-spacing:.5px;text-transform:uppercase">Pro v16</span></div>
+  </div>
+
+  <!-- ── FULL NAV (expanded) ── -->
+  <div class="sidebar-nav-full">
+    <div class="sidebar-nav-item on" id="snav-home" onclick="setBottomNav('home');gotoScreen('screen-home');setSideNav('home')">
+      <div class="sni-ico-bg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="sni-lbl">Home</span>
+    </div>
+    <div class="sidebar-nav-item collect-btn" id="snav-collect" onclick="openQuickCollect()">
+      <div class="sni-ico-bg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><span class="sni-lbl">Collect Payment</span>
+    </div>
+    <div class="sidebar-nav-item" id="snav-add" onclick="gotoScreen('screen-add');updateChitIdPreview();setSideNav('add')">
+      <div class="sni-ico-bg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><span class="sni-lbl">Add Borrower</span>
+    </div>
+    <div class="sidebar-nav-item" id="snav-reports" onclick="setBottomNav('reports');gotoScreen('screen-reports');setSideNav('reports')">
+      <div class="sni-ico-bg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><span class="sni-lbl">Reports</span>
+    </div>
+    <div class="sidebar-nav-item" id="snav-settings" onclick="setBottomNav('settings');gotoScreen('screen-settings');setSideNav('settings')">
+      <div class="sni-ico-bg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><span class="sni-lbl">Settings</span>
+    </div>
+  </div>
+
+  <!-- ── COMPACT ICON STRIP (collapsed) ── -->
+  <div class="sidebar-nav-icons">
+    <div class="sni-compact on" id="csnav-home" onclick="setBottomNav('home');gotoScreen('screen-home');setSideNav('home')" title="Home"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+    <div class="sni-compact collect" onclick="openQuickCollect()" title="Collect Payment"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+    <div class="sni-compact" id="csnav-add" onclick="gotoScreen('screen-add');updateChitIdPreview();setSideNav('add')" title="Add Borrower"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+    <div class="sni-compact" id="csnav-reports" onclick="setBottomNav('reports');gotoScreen('screen-reports');setSideNav('reports')" title="Reports"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+    <div class="sni-compact" id="csnav-settings" onclick="setBottomNav('settings');gotoScreen('screen-settings');setSideNav('settings')" title="Settings"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+  </div>
+
+  <div style="flex:1"></div>
+
+  <!-- Company tag (expanded only) -->
+  <div class="sidebar-company-tag" id="sidebar-co-tag">
+    <div class="sct-company" id="sidebar-co-name">—</div>
+    <div class="sct-role" id="sidebar-co-role">—</div>
+  </div>
+
+  <!-- Logout full (expanded) -->
+  <div class="sidebar-logout" onclick="doLogout()">
+    <span style="font-size:16px"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span><span>Logout</span>
+  </div>
+</div>
+<div class="screen active login-wrap" id="screen-login">
+
+  <!-- ── LEFT PANEL (desktop only) ── -->
+  <div class="lg-mesh">
+    <div class="lg-left-art">
+      <div class="lg-logo-row" style="justify-content:flex-start;margin-bottom:10px">
+        <div class="lg-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18v2H3zM3 11h12v2H3zM3 16h8v2H3z" fill="white" opacity=".9"/><path d="M19 15v6M16 18h6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="lg-brand" style="color:#fff">Daily<em style="color:#6AAAD4">Finance</em> Pro</div>
+      </div>
+      <div class="lg-left-tagline">Smart collection management for every team member.<br>Owner · Office Staff · Field Agents</div>
+      <div class="lg-feat-list">
+        <div class="lg-feat">
+          <div class="lg-feat-ico">📊</div>
+          <div class="lg-feat-text"><strong>Real-time Dashboard</strong>Track daily collections, targets & team performance live.</div>
+        </div>
+        <div class="lg-feat">
+          <div class="lg-feat-ico">👥</div>
+          <div class="lg-feat-text"><strong>Multi-role Access</strong>Owner, Office Staff & Field Agents — each with their own view.</div>
+        </div>
+        <div class="lg-feat">
+          <div class="lg-feat-ico">📱</div>
+          <div class="lg-feat-text"><strong>Works Everywhere</strong>Desktop, tablet, or mobile — always in sync.</div>
+        </div>
+      </div>
+      <div class="lg-left-badge">
+        <div class="lg-left-dot"></div>
+        <span>v6.0 · Made with ♥ in Tamil Nadu 🇮🇳</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT FORM PANEL ── -->
+  <div class="lg-inner">
+    <div class="lg-inner-form">
+
+      <!-- Mobile-only logo -->
+      <div class="lg-logo-row" style="display:none" id="lg-mobile-logo">
+        <div class="lg-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18v2H3zM3 11h12v2H3zM3 16h8v2H3z" fill="white" opacity=".9"/><path d="M19 15v6M16 18h6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="lg-brand">Daily<em>Finance</em> Pro</div>
+      </div>
+
+      <div class="lg-lang-row" style="justify-content:flex-start;margin-bottom:20px">
+        <span style="font-size:11px;color:var(--tx3);font-weight:500" data-en="Language" data-ta="மொழி">Language</span>
+        <div class="lang-toggle" id="lang-toggle">
+          <div class="lt-opt on" id="lt-en" onclick="setLang('en')">English</div>
+          <div class="lt-opt" id="lt-ta" onclick="setLang('ta')">தமிழ்</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:24px">
+        <div class="lg-h" style="font-size:22px;margin-bottom:4px" data-en="Welcome Back 👋" data-ta="மீண்டும் வரவேற்கிறோம் 👋">Welcome Back 👋</div>
+        <div class="lg-sub" data-en="Select your role and enter your company code" data-ta="உங்கள் பங்கை தேர்ந்தெடுத்து நிறுவன குறியீட்டை உள்ளிடுங்கள்">Select your role and enter your company code</div>
+      </div>
+
+      <div class="lg-card">
+        <span class="mini-lbl" data-en="I am a" data-ta="நான் ஒரு">I am a</span>
+        <div class="role-row" id="role-picker">
+          <div class="rc on" data-role="owner" onclick="selectRole('owner')"><span class="rc-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M4 20L6 8l6 6 6-10 2 16"/></svg></span><span class="rc-lbl" data-en="Owner" data-ta="உரிமையாளர்">Owner</span></div>
+          <div class="rc" data-role="staff" onclick="selectRole('staff')"><span class="rc-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span class="rc-lbl" data-en="Office Staff" data-ta="அலுவலக பணியாளர்">Office Staff</span></div>
+          <div class="rc" data-role="agent" onclick="selectRole('agent')"><span class="rc-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg></span><span class="rc-lbl" data-en="Field Agent" data-ta="களப்பணியாளர்">Field Agent</span></div>
+        </div>
+
+        <div class="inpw">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <label class="inplbl" style="margin-bottom:0" data-en="Company Code" data-ta="நிறுவன குறியீடு">Company Code</label>
+            <span onclick="showAllCompanies()" style="font-size:10px;color:var(--g1);font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;letter-spacing:.2px;text-decoration:underline;text-underline-offset:2px" data-en="📋 Pick from list" data-ta="📋 பட்டியலில் தேர்வு">📋 Pick from list</span>
+          </div>
+          <input class="inp" id="code-input" placeholder="e.g. VASU2024" autocomplete="off" oninput="this.value=this.value.toUpperCase().replace(/\s/g,'')" onkeydown="if(event.key==='Enter')document.getElementById('pw-input').focus()"/>
+        </div>
+
+        <div class="inpw">
+          <label class="inplbl"><span data-en="Password" data-ta="கடவுச்சொல்">Password</span></label>
+          <div style="position:relative">
+            <input class="inp" id="pw-input" type="password" placeholder="Enter your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()" style="padding-right:40px"/>
+            <button onclick="togglePwVis('pw-input','pw-eye')" id="pw-eye" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:15px;color:var(--tx3);padding:4px"></button>
+          </div>
+        </div>
+
+        <!-- Login attempts warning -->
+        <div id="login-warn" style="display:none;background:#FEF2F2;border:1.5px solid #FECACA;border-radius:10px;padding:9px 12px;font-size:11px;color:#B91C1C;font-weight:600;text-align:center"></div>
+        <button class="btn-g" onclick="doLogin()" data-en=" Enter App →" data-ta=" உள்ளே செல்க →"> Enter App →</button>
+        <div class="demo-hint" style="margin-top:9px">Demo password: <strong>demo1234</strong> · Codes: VASU2024 / SRI2025 / NIDHI001</div>
+      </div>
+
+      <div style="margin-top:18px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--tx3)">
+        <span data-en="New company?" data-ta="புதிய நிறுவனமா?">New company?</span>
+        <span style="color:var(--g1);font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:2px" onclick="openRegister()" data-en="Create Account" data-ta="கணக்கை உருவாக்குங்கள்">Create Account</span>
+      </div>
+
+      <!-- Mobile-only version tag -->
+      <div class="lg-ver" id="lg-ver-mobile" style="display:none">DailyFinance Pro v6.0 · <span data-en="Made with ♥ in Tamil Nadu 🇮🇳" data-ta="தமிழ்நாட்டில் ♥ உடன் உருவாக்கப்பட்டது 🇮🇳">Made with ♥ in Tamil Nadu 🇮🇳</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- HOME -->
+<div class="screen" id="screen-home">
+  <div class="topbar">
+    <div class="tb-logo">Daily<em>Finance</em> <sub id="role-display">Owner</sub></div>
+    <div class="live-pill"><div class="live-dot"></div><span data-en="LIVE" data-ta="நேரடி">LIVE</span></div>
+    <div class="lang-toggle" style="scale:.85;transform-origin:right center">
+      <div class="lt-opt on" id="lt-en-top" onclick="setLang('en')">EN</div>
+      <div class="lt-opt" id="lt-ta-top" onclick="setLang('ta')">த</div>
+    </div>
+    <div class="tb-rel"><div class="tb-btn" onclick="toggleNotif()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><div class="notif-dot" id="notif-dot"></div></div>
+    <div class="tb-btn" onclick="gotoScreen('screen-settings')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+  </div>
+  <div class="notif-panel" id="notif-panel">
+    <div class="np-hdr"><div class="np-t" data-en="Notifications" data-ta="அறிவிப்புகள்">Notifications</div><div class="np-clr" onclick="clearNotifs()" data-en="Clear all" data-ta="அனைத்தையும் அழி">Clear all</div></div>
+    <div id="notif-list"><div class="np-empty" data-en="No new notifications" data-ta="புதிய அறிவிப்புகள் இல்லை">No new notifications</div></div>
+  </div>
+  <div class="overlay" id="notif-overlay" onclick="closeNotif()"></div>
+  <div style="flex:1;overflow-y:auto;padding-bottom:8px">
+    <div class="hero"><div class="hero-inner">
+      <div class="hero-date" id="hero-date"></div>
+      <div class="hero-head" data-en="Today's Overview" data-ta="இன்றைய சுருக்கம்">Today's Overview</div>
+      <div class="hero-cells">
+        <div class="hero-cell"><div class="hero-val" id="hero-collected">₹0</div><div class="hero-lbl" data-en="Collected" data-ta="வசூலிக்கப்பட்டது">Collected</div></div>
+        <div class="hero-cell"><div class="hero-val" id="hero-txns">0</div><div class="hero-lbl" data-en="Transactions" data-ta="பரிவர்த்தனைகள்">Transactions</div></div>
+        <div class="hero-cell"><div class="hero-val" id="hero-pending">0</div><div class="hero-lbl" data-en="Due Today" data-ta="இன்று நிலுவை">Due Today</div></div>
+      </div>
+    </div></div>
+    <div class="stats-grid">
+      <div class="sc" onclick="gotoScreen('screen-reports');setBottomNav('reports')"><div class="sc-line sc-line-g"></div><div class="sc-top"><div class="sc-ico ico-g"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="sc-bdg bdg-up">+2</div></div><div class="sc-lbl" data-en="Total Loans" data-ta="மொத்த கடன்கள்">Total Loans</div><div class="sc-val" id="stat-loans">₹0</div><div class="sc-sub" id="stat-loans-sub">0 borrowers</div></div>
+      <div class="sc" onclick="gotoScreen('screen-reports');setBottomNav('reports')"><div class="sc-line sc-line-b"></div><div class="sc-top"><div class="sc-ico ico-b"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="20 6 9 17 4 12"/></svg></div><div class="sc-bdg bdg-up">↑</div></div><div class="sc-lbl" data-en="Total Collected" data-ta="மொத்த வசூல்">Total Collected</div><div class="sc-val" id="stat-collected">₹0</div><div class="sc-sub" data-en="Principal recovered" data-ta="அசல் மீட்டெடுக்கப்பட்டது">Principal recovered</div></div>
+      <div class="sc"><div class="sc-line sc-line-r"></div><div class="sc-top"><div class="sc-ico ico-r"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="sc-bdg bdg-dn">!</div></div><div class="sc-lbl" data-en="Pending" data-ta="நிலுவை">Pending</div><div class="sc-val" id="stat-pending">₹0</div><div class="sc-sub" id="stat-due">0 due today</div></div>
+      <div class="sc"><div class="sc-line sc-line-a"></div><div class="sc-top"><div class="sc-ico ico-a"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><span></span></div><div class="sc-lbl" data-en="Today Collected" data-ta="இன்று வசூல்">Today Collected</div><div class="sc-val" id="stat-today">₹0</div><div class="sc-sub" id="stat-txn-count">0 transactions</div></div>
+    </div>
+    <div class="sec-hdr"><div class="sec-title" data-en="Daily Analytics" data-ta="தினசரி பகுப்பாய்வு"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Daily Analytics</div><div class="sec-link" onclick="gotoScreen('screen-reports');setBottomNav('reports')" data-en="Full Report →" data-ta="முழு அறிக்கை →">Full Report →</div></div>
+    <div class="ana-grid">
+      <div class="acard"><div class="acard-title"><div class="acard-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span data-en="7-Day Collection" data-ta="7 நாள் வசூல்">7-Day Collection</span></div><div class="bar-chart" id="weekly-bars"></div></div>
+      <div class="acard">
+        <div class="acard-title"><div class="acard-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><span data-en="Today's Target" data-ta="இன்றைய இலக்கு">Today's Target</span></div>
+        <div class="prog-hdr"><div class="prog-lbl" data-en="Progress" data-ta="முன்னேற்றம்">Progress</div><div class="prog-pct" id="cp-pct">0%</div></div>
+        <div class="prog-track"><div class="prog-fill" id="cp-fill" style="width:0%"></div></div>
+        <div class="prog-sub" id="cp-sub">₹0 of ₹15,000 target</div>
+        <div class="mini-row">
+          <div class="mini-c g"><div class="mini-v" id="ms-today">₹0</div><div class="mini-l" data-en="Today" data-ta="இன்று">Today</div></div>
+          <div class="mini-c b"><div class="mini-v" id="ms-week">₹0</div><div class="mini-l" data-en="Week" data-ta="வாரம்">Week</div></div>
+          <div class="mini-c"><div class="mini-v" id="ms-month">₹0</div><div class="mini-l" data-en="Month" data-ta="மாதம்">Month</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sec-hdr"><div class="sec-title" data-en="Live Collection Feed" data-ta="நேரடி வசூல் ஊட்டம்"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Live Collection Feed</div><div class="sec-link" id="feed-lbl">Today: 0</div></div>
+    <div style="margin:0 clamp(10px,3vw,16px)"><div class="acard" style="padding:12px">
+      <div style="font-size:10px;font-weight:500;color:var(--tx3);margin-bottom:9px" data-en="Tap any entry to view customer details" data-ta="வாடிக்கையாளர் விவரங்களை காண எந்த உள்ளீட்டையும் தட்டவும்"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 2a2 2 0 0 1 2 2v6h3a2 2 0 0 1 0 4h-1l-1 8H9l-1-8H7a2 2 0 0 1 0-4h3V4a2 2 0 0 1 2-2z"/></svg> Tap any entry to view customer details</div>
+      <div class="live-feed" id="live-feed"><div class="feed-empty" data-en="No collections recorded today. Tap Collect below to begin." data-ta="இன்று வசூல் ஏதும் பதிவு செய்யப்படவில்லை. வசூல் பொத்தானை அழுத்துங்கள்.">No collections recorded today. Tap Collect below to begin.</div>
+    </div></div></div>
+    <div class="search-bar" style="margin-top:14px">
+      <div class="search-w"><span class="s-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><input class="s-inp" id="search-input" placeholder="Search by name or phone…" oninput="filterBorrowers()"/></div>
+      <button class="add-btn" onclick="gotoScreen('screen-add');updateChitIdPreview()" data-en="＋ Add New" data-ta="＋ புதிதாக சேர்க்கவும்">＋ Add New</button>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn on" id="tab-active" onclick="setTab('active')" data-en="Active Loans" data-ta="செயலில் உள்ள கடன்கள்">Active Loans</button>
+      <button class="tab-btn" id="tab-closed" onclick="setTab('closed')" data-en="Closed Accounts" data-ta="மூடிய கணக்குகள்">Closed Accounts</button>
+    </div>
+    <!-- Frequency Filter Chips -->
+    <div class="freq-filter-row" id="freq-filter-row">
+      <div class="ff-chip on" data-ff="all" onclick="setFreqFilter('all')"><span class="ff-dot"></span><span data-en="All" data-ta="அனைத்தும்">All</span></div>
+      <div class="ff-chip" data-ff="daily" onclick="setFreqFilter('daily')"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span data-en="Daily" data-ta="தினசரி">Daily</span></div>
+      <div class="ff-chip" data-ff="weekly" onclick="setFreqFilter('weekly')"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg></span><span data-en="Weekly" data-ta="வாராந்திர">Weekly</span></div>
+      <div class="ff-chip" data-ff="monthly" onclick="setFreqFilter('monthly')"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><rect x="8" y="14" width="3" height="3"/></svg></span><span data-en="Monthly" data-ta="மாதாந்திர">Monthly</span></div>
+    </div>
+    <!-- List Header with Status Filter -->
+    <div class="list-hdr">
+      <div class="list-lbl-txt" id="list-count">Borrowers</div>
+      <div class="sts-filter">
+        <button class="sf-btn on" data-sf="all" onclick="setStatusFilter('all')" data-en="All" data-ta="அனைத்தும்">All</button>
+        <button class="sf-btn" data-sf="pending" onclick="setStatusFilter('pending')" data-en="Pending" data-ta="நிலுவை">Pending</button>
+        <button class="sf-btn" data-sf="overdue" onclick="setStatusFilter('overdue')" data-en="Overdue" data-ta="தாமதம்">Overdue</button>
+        <button class="sf-btn" data-sf="completed" onclick="setStatusFilter('completed')" data-en="Completed" data-ta="முடிந்தது">Completed</button>
+      </div>
+    </div>
+    <div class="list-sec" style="padding-top:0"><div id="borrower-list"></div></div>
+  </div>
+  <div class="bottom-nav">
+    <div class="bn on" id="bn-home" onclick="setBottomNav('home');gotoScreen('screen-home')"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span></div><span class="bn-lbl" data-en="Home" data-ta="முகப்பு">Home</span></div>
+    <div class="bn" id="bn-collect" onclick="openQuickCollect()"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span></div><span class="bn-lbl" data-en="Collect" data-ta="வசூல்">Collect</span></div>
+    <div class="bn" id="bn-reports" onclick="setBottomNav('reports');gotoScreen('screen-reports')"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span></div><span class="bn-lbl" data-en="Reports" data-ta="அறிக்கைகள்">Reports</span></div>
+    <div class="bn" id="bn-settings" onclick="setBottomNav('settings');gotoScreen('screen-settings')"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span></div><span class="bn-lbl" data-en="Settings" data-ta="அமைப்புகள்">Settings</span></div>
+  </div>
+</div>
+
+<!-- ADD BORROWER -->
+<div class="screen" id="screen-add" style="flex-direction:column">
+  <div class="form-topbar">
+    <div class="back-btn" onclick="gotoScreen('screen-home')">←</div>
+    <div style="flex:1;min-width:0">
+      <div class="form-t" data-en="Add New Borrower" data-ta="புதிய கடன்தாரர் சேர்க்கவும்">Add New Borrower</div>
+      <div id="chit-id-preview" style="font-size:10px;font-weight:700;color:var(--g1);letter-spacing:.5px;margin-top:1px"></div>
+    </div>
+    <button class="form-save" onclick="saveBorrower()" data-en="Save ✓" data-ta="சேமி ✓">Save ✓</button>
+  </div>
+  <div class="form-body-wrap"><div class="fbody">
+
+    <!-- CHIT ID BANNER -->
+    <div style="margin:0 15px 4px;background:linear-gradient(135deg,#004C8F,#003366);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 18px rgba(0,76,143,.25)">
+      <div style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🪪</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.65);letter-spacing:.8px;text-transform:uppercase;margin-bottom:2px">Member ID — Auto Assigned</div>
+        <div style="font-family:var(--disp);font-size:22px;font-weight:900;color:#fff;letter-spacing:-0.5px" id="next-chit-id">—</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.55);margin-top:1px">Company prefix + sequential number (e.g. VASU-001)</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:3px">Company</div>
+        <div style="font-size:11px;font-weight:800;color:rgba(255,255,255,.9)" id="chit-company-code-disp">—</div>
+      </div>
+    </div>
+
+    <!-- PERSONAL INFORMATION -->
+    <div class="fsec">
+      <div class="fsec-title"><div class="fsec-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><span data-en="Personal Information" data-ta="தனிப்பட்ட தகவல்">Personal Information</span></div>
+      <div class="frow">
+        <div class="fw full"><label class="flbl" data-en="Full Name *" data-ta="முழு பெயர் *">Full Name *</label><input class="inp" id="f-name" placeholder="e.g. Meena Devi"/></div>
+        <div class="fw"><label class="flbl" data-en="Mobile *" data-ta="மொபைல் *">Mobile *</label><input class="inp" id="f-phone" placeholder="98765 43210" type="tel"/></div>
+        <div class="fw"><label class="flbl" data-en="Alternate Number" data-ta="மாற்று எண்">Alternate Number</label><input class="inp" id="f-alt-phone" placeholder="e.g. 91234 56789" type="tel"/></div>
+        <div class="fw full"><label class="flbl" data-en="Address *" data-ta="முகவரி *">Address *</label><input class="inp" id="f-address" placeholder="Street, Area, City"/></div>
+      </div>
+    </div>
+
+    <!-- KYC DETAILS -->
+    <div class="fsec">
+      <div class="fsec-title"><div class="fsec-ico" style="font-size:13px">🪪</div><span data-en="KYC Details" data-ta="KYC விவரங்கள்">KYC Details</span></div>
+      <div class="frow">
+        <div class="fw full"><label class="flbl" data-en="Aadhaar No." data-ta="ஆதார் எண்">Aadhaar No.</label><input class="inp" id="f-aadhaar" placeholder="XXXX XXXX XXXX"/></div>
+        <div class="fw full">
+          <label class="flbl">PAN Card No.</label>
+          <input class="inp" id="f-pan" placeholder="ABCDE1234F" maxlength="10" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"/>
+        </div>
+      </div>
+      <div style="padding:6px 15px 4px;font-size:11px;font-weight:700;color:var(--tx2);letter-spacing:.2px"> Nominee Details <span style="font-weight:400;color:var(--tx3)">(Optional)</span></div>
+      <div class="frow">
+        <div class="fw full"><label class="flbl">Nominee Name</label><input class="inp" id="f-nominee-name" placeholder="e.g. Rajan Kumar"/></div>
+        <div class="fw"><label class="flbl">Relation</label><input class="inp" id="f-nominee-relation" placeholder="e.g. Spouse, Son"/></div>
+        <div class="fw"><label class="flbl">Nominee Mobile</label><input class="inp" id="f-nominee-phone" placeholder="98765 43210" type="tel"/></div>
+      </div>
+    </div>
+
+    <!-- BANK DETAILS -->
+    <div class="fsec">
+      <div class="fsec-title"><div class="fsec-ico" style="font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></div><span>Bank Details</span></div>
+      <div class="frow">
+        <div class="fw full">
+          <label class="flbl">Bank Name</label>
+          <input class="inp" id="f-bank-name" placeholder="e.g. State Bank of India"/>
+        </div>
+        <div class="fw full">
+          <label class="flbl">Account Number</label>
+          <input class="inp" id="f-bank-acc" placeholder="e.g. 012345678901" type="tel"/>
+        </div>
+        <div class="fw">
+          <label class="flbl">IFSC Code</label>
+          <input class="inp" id="f-ifsc" placeholder="SBIN0001234" maxlength="11" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"/>
+        </div>
+        <div class="fw">
+          <label class="flbl">Account Type</label>
+          <select class="inp" id="f-acc-type">
+            <option value="">Select…</option>
+            <option value="Savings">Savings</option>
+            <option value="Current">Current</option>
+            <option value="Jan Dhan">Jan Dhan</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin:4px 15px 10px;padding:10px 12px;background:var(--gp);border-radius:10px;border:1px dashed var(--gb);font-size:11px;color:var(--tx3);display:flex;align-items:center;gap:7px">
+        <span style="font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+        <span>KYC &amp; Bank details are optional but recommended for compliance.</span>
+      </div>
+    </div>
+
+    <!-- LEDGER BOOK NUMBER -->
+    <div class="fsec">
+      <div class="fsec-title"><div class="fsec-ico" style="font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span data-en="Ledger Book Entry" data-ta="லெட்ஜர் புத்தக உள்ளீடு">Ledger Book Entry</span></div>
+      <div class="frow">
+        <div class="fw full">
+          <label class="flbl" data-en="Ledger Book No." data-ta="லெட்ஜர் எண்">Ledger Book No. <span style="font-weight:400;color:var(--tx3)">(Manual — as per your ledger)</span></label>
+          <input class="inp" id="f-ledger-no" placeholder="e.g. 45, LB-112, Page 7…"/>
+        </div>
+      </div>
+      <div style="margin:0 15px 10px;padding:10px 12px;background:var(--amberbg);border-radius:10px;border:1px dashed var(--amberbdr);font-size:11px;color:#92400E;display:flex;align-items:center;gap:7px">
+        <span style="font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24z"/></svg></span>
+        <span>This is your physical ledger reference number — different from the auto-assigned Member ID (<strong id="ledger-hint-id"></strong>).</span>
+      </div>
+    </div>
+
+    <!-- REFERRAL SECTION -->
+    <div class="fsec" id="referral-section">
+      <div class="fsec-title" style="cursor:pointer" onclick="toggleReferral()">
+        <div class="fsec-ico" style="font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <span>Referral <span style="font-size:10px;font-weight:500;color:var(--tx3);font-family:var(--font)">(Optional)</span></span>
+        <div style="margin-left:auto;width:28px;height:28px;border-radius:50%;background:var(--surf2);display:flex;align-items:center;justify-content:center;font-size:13px;transition:var(--ease)" id="ref-toggle-ico">＋</div>
+      </div>
+      <div id="referral-fields" style="display:none">
+        <div style="margin:0 15px 10px;padding:10px 13px;background:linear-gradient(135deg,#e6f9f3,#d0f5e8);border-radius:11px;border:1.5px solid var(--embdr);font-size:11px;color:#065f46;font-weight:500;display:flex;align-items:center;gap:7px">
+          <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span> This borrower was referred — fill in the referrer's details below.
+        </div>
+        <div class="frow">
+          <div class="fw full">
+            <label class="flbl">Referrer's Chit ID <span style="font-weight:500;color:var(--tx3);text-transform:none">(if referrer is an existing customer)</span></label>
+            <div style="display:flex;gap:8px">
+              <input class="inp" id="f-ref-chitid" placeholder="e.g. 12 or CO-012" oninput="lookupReferrer()" style="flex:1"/>
+            </div>
+            <div id="ref-lookup-msg" style="font-size:11px;font-weight:600;margin-top:5px;display:none"></div>
+          </div>
+          <div class="fw full">
+            <label class="flbl">Referrer's Full Name *</label>
+            <input class="inp" id="f-ref-name" placeholder="e.g. Kumar Raj"/>
+          </div>
+          <div class="fw">
+            <label class="flbl">Referrer's Mobile</label>
+            <input class="inp" id="f-ref-phone" placeholder="98765 43210" type="tel"/>
+          </div>
+          <div class="fw full">
+            <label class="flbl">Referrer's Address</label>
+            <input class="inp" id="f-ref-address" placeholder="Street, Area, City"/>
+          </div>
+          <div class="fw full">
+            <label class="flbl">Relationship to Borrower</label>
+            <select class="inp" id="f-ref-relation">
+              <option value="">Select…</option>
+              <option value="Friend">Friend</option>
+              <option value="Relative">Relative</option>
+              <option value="Colleague">Colleague</option>
+              <option value="Neighbour">Neighbour</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOAN DETAILS -->
+    <div class="fsec">
+      <div class="fsec-title"><div class="fsec-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><circle cx="12" cy="14" r="2"/></svg></div><span data-en="Loan Details" data-ta="கடன் விவரங்கள்">Loan Details</span></div>
+      <div class="frow">
+        <div class="fw"><label class="flbl" data-en="DC No" data-ta="DC எண்">DC No</label><input class="inp" id="f-dcno" placeholder="B-01" type="text" readonly style="background:var(--bg2);color:var(--tx2)"/></div>
+        <div class="fw"><label class="flbl" data-en="Amount (₹) *" data-ta="தொகை (₹) *">Amount (₹) *</label><input class="inp" id="f-amount" placeholder="10000" type="text" inputmode="numeric" pattern="[0-9]*" oninput="this.value=this.value.replace(/[^0-9]/g,'');calcEMI()"/></div>
+      </div>
+      <div class="frow">
+        <div class="fw">
+          <label class="flbl" data-en="Deducted Amount (₹)" data-ta="கழிக்கும் தொகை (₹)">Deducted Amount (₹)</label>
+          <input class="inp" id="f-deducted" placeholder="0" type="text" inputmode="numeric" pattern="[0-9]*" value="0" oninput="this.value=this.value.replace(/[^0-9]/g,'');calcExpectedReturn()"/>
+          <div style="font-size:10px;color:var(--tx3);margin-top:4px;padding-left:2px;" data-en="Upfront fee deducted before giving loan" data-ta="கடன் கொடுக்கும் முன் கழிக்கப்படும் தொகை">Upfront fee deducted before giving loan</div>
+        </div>
+        <div class="fw">
+          <label class="flbl" data-en="Amount in Hand (₹)" data-ta="கையில் கிடைக்கும் தொகை (₹)">Amount in Hand (₹)</label>
+          <input class="inp" id="f-amount-in-hand" placeholder="Auto" type="text" readonly style="background:var(--bg2);color:var(--g1);font-weight:600"/>
+          <div style="font-size:10px;color:var(--tx3);margin-top:4px;padding-left:2px;" data-en="Actual cash borrower receives" data-ta="கடன்தாரருக்கு கிடைக்கும் உண்மையான தொகை">Actual cash borrower receives</div>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fw" style="grid-column:1/-1">
+          <label class="flbl" data-en="Expected Return (₹)" data-ta="எதிர்பார்த்த திரும்பல் (₹)">Expected Return (₹)</label>
+          <input class="inp" id="f-expected-return" placeholder="Auto" type="text" readonly style="background:var(--bg2);color:var(--tx2);font-weight:600"/>
+          <div style="font-size:10px;color:var(--tx3);margin-top:4px;padding-left:2px;" data-en="Full loan amount borrower must repay" data-ta="கடன்தாரர் திரும்ப செலுத்த வேண்டிய முழு தொகை">Full loan amount borrower must repay</div>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fw"><label class="flbl" data-en="Collection Type" data-ta="வசூல் வகை">Collection Type</label>
+          <select class="inp" id="f-colltype" onchange="calcEMI()">
+            <option value="daily" data-en="Daily" data-ta="தினசரி">Daily</option>
+            <option value="weekly" data-en="Weekly" data-ta="வாராந்திர">Weekly</option>
+            <option value="monthly" data-en="Monthly" data-ta="மாதாந்திர">Monthly</option>
+          </select>
+        </div>
+        <div class="fw">
+          <label class="flbl" data-en="Duration" data-ta="காலவரையறை">Duration</label>
+          <select class="inp" id="f-duration-type" onchange="handleDurationChange()">
+            <option value="" data-en="— Select —" data-ta="— தேர்ந்தெடு —">— Select —</option>
+            <option value="custom" data-en="Custom" data-ta="தனிப்பயன்">Custom</option>
+            <option value="daily" data-en="Daily" data-ta="தினசரி">Daily</option>
+            <option value="weekly" data-en="Weekly" data-ta="வாராந்திர">Weekly</option>
+            <option value="monthly" data-en="Monthly" data-ta="மாதாந்திர">Monthly</option>
+          </select>
+          <div id="duration-manual-wrap" style="display:none;margin-top:8px;">
+            <input class="inp" id="f-duration-value" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 30" oninput="this.value=this.value.replace(/[^0-9]/g,'');calcEndDateAuto()"/>
+            <div id="duration-unit-hint" style="font-size:10px;color:var(--tx3);margin-top:4px;padding-left:2px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fw"><label class="flbl" data-en="Start Date" data-ta="தொடக்க தேதி">Start Date</label><input class="inp" id="f-startdate" type="date" oninput="calcEndDateAuto()"/></div>
+        <div class="fw"><label class="flbl" data-en="End Date (Auto)" data-ta="முடிவு தேதி (தானியங்கி)">End Date (Auto)</label><input class="inp" id="f-enddate" placeholder="dd-mm-yyyy" type="text" readonly style="background:var(--bg2);color:var(--tx2)"/></div>
+      </div>
+      <div class="frow" id="interest-tenure-row">
+        <div class="fw" id="interest-wrap"><label class="flbl" id="interest-lbl" data-en="Interest %" data-ta="வட்டி %">Interest %</label><input class="inp" id="f-interest" placeholder="2" type="text" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" value="2" oninput="this.value=this.value.replace(/[^0-9.]/g,'');calcEMI()"/><div id="interest-monthly-note" style="display:none;font-size:10px;color:var(--g1);margin-top:4px;padding-left:2px;" data-en="✎ Client sets this value" data-ta="✎ வாடிக்கையாளர் இதை நிர்ணயிக்கிறார்">✎ Client sets this value</div></div>
+        <div class="fw" id="tenure-wrap"><label class="flbl" id="tenure-lbl" data-en="Tenure (instalments)" data-ta="காலம் (தவணைகள்)">Tenure (instalments)</label><input class="inp" id="f-tenure" placeholder="100" type="text" inputmode="numeric" pattern="[0-9]*" oninput="this.value=this.value.replace(/[^0-9]/g,'');calcEMI()"/><div id="tenure-monthly-note" style="display:none;font-size:10px;color:var(--g1);margin-top:4px;padding-left:2px;" data-en="✎ Client sets this value" data-ta="✎ வாடிக்கையாளர் இதை நிர்ணயிக்கிறார்">✎ Client sets this value</div></div>
+      </div>
+      <div class="calc-res" id="calc-result">
+        <div class="calc-row"><span class="ck" data-en="Principal" data-ta="அசல்">Principal</span><span class="cv" id="cr-principal">₹0</span></div>
+        <div class="calc-row"><span class="ck" data-en="Total Interest" data-ta="மொத்த வட்டி">Total Interest</span><span class="cv" id="cr-interest">₹0</span></div>
+        <div class="calc-row"><span class="ck" data-en="EMI / Instalment" data-ta="தவணை / EMI">EMI / Instalment</span><span class="ctot" id="cr-emi">₹0</span></div>
+        <div class="calc-row"><span class="ck" data-en="Total Payable" data-ta="மொத்த செலுத்தவேண்டியது">Total Payable</span><span class="ctot" id="cr-total">₹0</span></div>
+      </div>
+    </div>
+    <button class="submit-btn" onclick="saveBorrower()" data-en="✓ Save Borrower" data-ta="✓ கடன்தாரர் சேமிக்கவும்">✓ Save Borrower</button>
+  </div></div>
+</div>
+
+<!-- DETAIL -->
+<div class="screen" id="screen-detail" style="flex-direction:column">
+  <div class="form-topbar"><div class="back-btn" onclick="gotoScreen('screen-home')">←</div><div class="form-t" data-en="Borrower Details" data-ta="கடன்தாரர் விவரங்கள்">Borrower Details</div><div style="font-size:11px;font-weight:700;color:var(--g1);cursor:pointer" onclick="showToast('WhatsApp reminder sent! ')" data-en="Remind" data-ta="நினைவூட்டு"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> Remind</div></div>
+  <div style="flex:1;overflow-y:auto">
+    <div class="det-hdr">
+      <div class="det-hero"><div class="det-ava" id="det-avatar"></div><div style="flex:1;min-width:0"><div class="det-name" id="det-name"></div><div class="det-phone" id="det-phone"></div><div class="det-addr" id="det-address-top"></div><div class="sts-row"><div class="sbdg" id="det-status"></div></div></div></div>
+      <div class="det-stats"><div class="det-s"><div class="det-sv" id="det-amount"></div><div class="det-sl" data-en="Loan Amt" data-ta="கடன் தொகை">Loan Amt</div></div><div class="det-s"><div class="det-sv" id="det-paid" style="color:rgba(255,255,255,.85)"></div><div class="det-sl" data-en="Paid" data-ta="செலுத்தியது">Paid</div></div><div class="det-s"><div class="det-sv" id="det-balance" style="color:#FCA5A5"></div><div class="det-sl" data-en="Balance" data-ta="இருப்பு">Balance</div></div></div>
+      <div><div class="prog-hdr"><div class="prog-lbl" style="color:rgba(255,255,255,.8);font-size:11px" data-en="Recovery Progress" data-ta="மீட்பு முன்னேற்றம்">Recovery Progress</div><div class="prog-pct" id="det-prog-pct">0%</div></div><div class="prog-track" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.15)"><div class="prog-fill" id="det-prog-fill" style="width:0%;background:rgba(255,255,255,.9)"></div></div></div>
+    </div>
+    <div class="det-body">
+      <div class="det-card"><div class="det-card-t" data-en="Loan Information" data-ta="கடன் தகவல்">Loan Information</div>
+        <div class="det-row"><span class="dk">🪪 Member ID</span><span class="dv" id="det-chit-id" style="color:var(--g1);font-weight:800">—</span></div>
+        <div class="det-row" id="det-ledger-row" style="display:none"><span class="dk"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Ledger No.</span><span class="dv" id="det-ledger-no" style="font-weight:700;color:var(--amber)">—</span></div>
+        <div class="det-row"><span class="dk" data-en="Address" data-ta="முகவரி">Address</span><span class="dv" id="det-address">—</span></div>
+        <div class="det-row" id="det-alt-phone-row" style="display:none"><span class="dk">Alt. Mobile</span><span class="dv" id="det-alt-phone">—</span></div>
+        <div class="det-row"><span class="dk" data-en="Interest Rate" data-ta="வட்டி விகிதம்">Interest Rate</span><span class="dv" id="det-interest">—</span></div>
+        <div class="det-row"><span class="dk" data-en="Frequency" data-ta="அலைவரிசை">Frequency</span><span class="dv" id="det-freq">—</span></div>
+        <div class="det-row"><span class="dk" data-en="Tenure" data-ta="காலம்">Tenure</span><span class="dv" id="det-tenure">—</span></div>
+        <div class="det-row"><span class="dk" data-en="Start Date" data-ta="தொடக்க தேதி">Start Date</span><span class="dv" id="det-startdate">—</span></div>
+        <div class="det-row"><span class="dk" data-en="Instalment (EMI)" data-ta="தவணை (EMI)">Instalment (EMI)</span><span class="dv" id="det-emi" style="color:var(--g1);font-weight:800">—</span></div>
+      </div>
+      <!-- KYC / Bank -->
+      <div class="det-card" id="det-bank-section">
+        <div class="det-card-t">🪪 KYC Details</div>
+        <div class="det-row"><span class="dk">Aadhaar</span><span class="dv" id="det-aadhaar">—</span></div>
+        <div class="det-row"><span class="dk">PAN Card</span><span class="dv" id="det-pan" style="font-weight:700;letter-spacing:.5px">—</span></div>
+        <div class="det-row" id="det-nominee-row" style="display:none"><span class="dk">Nominee</span><span class="dv" id="det-nominee-name">—</span></div>
+        <div class="det-row" id="det-nominee-rel-row" style="display:none"><span class="dk">Nominee Relation</span><span class="dv" id="det-nominee-relation">—</span></div>
+        <div class="det-row" id="det-nominee-ph-row" style="display:none"><span class="dk">Nominee Mobile</span><span class="dv" id="det-nominee-phone">—</span></div>
+      </div>
+      <div class="det-card" id="det-bankinfo-section">
+        <div class="det-card-t"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg> Bank Details</div>
+        <div class="det-row"><span class="dk">Bank Name</span><span class="dv" id="det-bank-name">—</span></div>
+        <div class="det-row"><span class="dk">Account No.</span><span class="dv" id="det-bank-acc" style="font-family:monospace;letter-spacing:.5px">—</span></div>
+        <div class="det-row"><span class="dk">IFSC Code</span><span class="dv" id="det-ifsc" style="font-family:monospace">—</span></div>
+        <div class="det-row"><span class="dk">Account Type</span><span class="dv" id="det-acc-type">—</span></div>
+      </div>
+      <!-- Referral -->
+      <div class="det-card" id="det-referral-section">
+        <div class="det-card-t"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Referred By</div>
+        <div class="det-row"><span class="dk">Referrer Name</span><span class="dv" id="det-ref-name" style="font-weight:700">—</span></div>
+        <div class="det-row"><span class="dk">Chit ID</span><span class="dv" id="det-ref-chitid" style="color:var(--g1);font-weight:700">—</span></div>
+        <div class="det-row"><span class="dk">Mobile</span><span class="dv" id="det-ref-phone">—</span></div>
+        <div class="det-row"><span class="dk">Relationship</span><span class="dv" id="det-ref-relation">—</span></div>
+        <div class="det-row"><span class="dk">Address</span><span class="dv" id="det-ref-address">—</span></div>
+      </div>
+      <div class="det-card" style="padding:0;overflow:hidden">
+        <div class="det-card-t" style="padding:13px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid var(--bdr)">
+          <span style="display:flex;align-items:center;gap:7px">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--em);display:inline-block"></span>
+            Installment Schedule
+          </span>
+          <button onclick="exportLoanStatementPDF()" style="display:flex;align-items:center;gap:5px;padding:5px 11px;background:var(--redbg);border:1.5px solid var(--redbdr);border-radius:50px;font-family:var(--font);font-size:10px;font-weight:700;color:var(--red);cursor:pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Export PDF
+          </button>
+        </div>
+        <!-- Table header -->
+        <div class="sch-thead">
+          <span class="sch-th sch-no">NO</span>
+          <span class="sch-th sch-due">DUE DATE</span>
+          <span class="sch-th sch-paid">PAID DATE</span>
+          <span class="sch-th sch-amt">AMOUNT</span>
+          <span class="sch-th sch-mode">MODE</span>
+          <span class="sch-th sch-sig">SIGNATURE</span>
+        </div>
+        <div id="det-payments"></div>
+      </div>
+    </div>
+  </div>
+  <div class="act-btns">
+    <button class="act-btn ab-g" onclick="openCollectModal()" data-en="Collect" data-ta="வசூல்"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Collect</button>
+    <button class="act-btn ab-b" onclick="showToast('WhatsApp reminder sent! ')" data-en="WhatsApp" data-ta="வாட்சாப்"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> WhatsApp</button>
+    <button class="act-btn ab-f" onclick="showToast('Statement exported as PDF')" data-en="PDF" data-ta="PDF"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> PDF</button>
+  </div>
+</div>
+
+<!-- REPORTS -->
+<div class="screen" id="screen-reports" style="flex-direction:column">
+  <div class="topbar">
+    <div class="back-btn" onclick="gotoScreen('screen-home');setBottomNav('home')">←</div>
+    <div class="tb-logo" style="font-size:15px">Reports &amp; Analytics</div>
+    <button class="rep-export-topbtn" onclick="openExportModal()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Export
+    </button>
+  </div>
+  <div class="rep-screen">
+
+    <!-- PORTFOLIO HERO -->
+    <div class="rep-hero"><div class="rh-lbl">Total Portfolio Value</div><div class="rh-val" id="rep-total">₹0</div><div class="rh-row"><div class="rh-cell"><div class="rh-cv" id="rep-collected">₹0</div><div class="rh-cl">Collected</div></div><div class="rh-cell"><div class="rh-cv" id="rep-pending-r">₹0</div><div class="rh-cl">Pending</div></div><div class="rh-cell"><div class="rh-cv" id="rep-borrowers">0</div><div class="rh-cl">Borrowers</div></div></div></div>
+
+    <!-- KPI STRIP -->
+    <div style="padding:0 clamp(10px,3vw,16px)">
+      <div class="kpi-grid">
+        <div class="kpi-c"><div class="kpi-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="kpi-v" id="kpi-today">₹0</div><div class="kpi-l">Today</div><div class="kpi-ch k-up">+0%</div></div>
+        <div class="kpi-c"><div class="kpi-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div><div class="kpi-v" id="kpi-txns">0</div><div class="kpi-l">Transactions</div><div class="kpi-ch k-up" id="kpi-txns-ch">agents</div></div>
+        <div class="kpi-c"><div class="kpi-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div class="kpi-v" id="kpi-week">₹0</div><div class="kpi-l">This Week</div><div class="kpi-ch k-up">7-day total</div></div>
+        <div class="kpi-c"><div class="kpi-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="kpi-v" id="kpi-rate">0%</div><div class="kpi-l">Collection Rate</div><div class="kpi-ch" id="kpi-rate-cls">of portfolio</div></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION 1 — TODAY'S COLLECTION
+    ══════════════════════════════════════════ -->
+    <div class="rep-sec-hdr">
+      <div class="rep-sec-t-new">
+        <div class="rep-sec-ico" style="background:#D0E4F5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#004C8F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <div class="rep-sec-name">Today's Collection</div>
+          <div class="rep-sec-sub">Tap any row to open customer details</div>
+        </div>
+      </div>
+      <button class="rep-sec-export-btn" onclick="exportTodayPDF()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        PDF
+      </button>
+    </div>
+    <div style="padding:0 clamp(10px,3vw,16px);margin-bottom:14px">
+      <!-- Summary strip -->
+      <div class="today-summary-strip">
+        <div class="tss-cell">
+          <div class="tss-val" id="tss-total">₹0</div>
+          <div class="tss-lbl">Total Collected</div>
+        </div>
+        <div class="tss-div"></div>
+        <div class="tss-cell">
+          <div class="tss-val tss-blue" id="tss-count">0</div>
+          <div class="tss-lbl">Payments</div>
+        </div>
+        <div class="tss-div"></div>
+        <div class="tss-cell">
+          <div class="tss-val tss-amber" id="tss-agents">0</div>
+          <div class="tss-lbl">Agents Active</div>
+        </div>
+      </div>
+      <!-- Transaction table -->
+      <div class="txn-table">
+        <div class="txn-thead">
+          <span class="txn-th txn-th-sno">#</span>
+          <span class="txn-th txn-th-name">Customer</span>
+          <span class="txn-th txn-th-time">Time</span>
+          <span class="txn-th txn-th-mode">Mode</span>
+          <span class="txn-th txn-th-amt">Amount</span>
+          <span class="txn-th txn-th-agent">Agent</span>
+        </div>
+        <div id="today-txn-rows">
+          <div class="txn-empty">No collections recorded today. Start collecting to see entries here.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION 2 — THIS WEEK
+    ══════════════════════════════════════════ -->
+    <div class="rep-sec-hdr">
+      <div class="rep-sec-t-new">
+        <div class="rep-sec-ico" style="background:#E6FAF5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00C48C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <div>
+          <div class="rep-sec-name">This Week</div>
+          <div class="rep-sec-sub">Mon – Sun · Today highlighted</div>
+        </div>
+      </div>
+      <button class="rep-sec-export-btn" onclick="exportWeekPDF()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        PDF
+      </button>
+    </div>
+    <div style="padding:0 clamp(10px,3vw,16px);margin-bottom:14px">
+      <div class="week-bars-card" id="week-bars-card"></div>
+      <div class="week-day-rows" id="week-day-rows"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION 3 — THIS MONTH
+    ══════════════════════════════════════════ -->
+    <div class="rep-sec-hdr">
+      <div class="rep-sec-t-new">
+        <div class="rep-sec-ico" style="background:var(--amberbg)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><rect x="8" y="14" width="3" height="3"/></svg>
+        </div>
+        <div>
+          <div class="rep-sec-name">This Month</div>
+          <div class="rep-sec-sub">Week 1 actual · Weeks 2–4 projected</div>
+        </div>
+      </div>
+      <button class="rep-sec-export-btn" onclick="exportMonthPDF()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        PDF
+      </button>
+    </div>
+    <div style="padding:0 clamp(10px,3vw,16px);margin-bottom:14px">
+      <!-- Week breakdown -->
+      <div class="month-weeks-card" id="month-weeks-card"></div>
+      <!-- Payment mode breakdown -->
+      <div class="rep-card" style="margin-top:10px;padding:16px 14px">
+        <div class="mode-sec-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Collections by Payment Mode
+          <span class="mode-sec-badge">Actual payments only</span>
+        </div>
+        <div id="mode-breakdown"></div>
+      </div>
+    </div>
+
+    <!-- DAILY ANALYTICS (existing) -->
+    <div class="rep-sec-t">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Daily Analytics
+    </div>
+    <div style="padding:0 clamp(10px,3vw,16px)">
+      <div class="rep-card" style="margin-bottom:10px;padding:13px">
+        <div style="font-size:10px;font-weight:700;color:var(--tx2);letter-spacing:.3px;text-transform:uppercase;margin-bottom:9px">Today's Collections by Time Slot</div>
+        <div class="trow"><div class="tb"><div class="tb-t">Morning</div><div class="tb-v" id="tb-morning">—</div><div class="tb-bar"><div class="tb-fill" id="tbf-morning" style="width:0%"></div></div></div><div class="tb"><div class="tb-t">Afternoon</div><div class="tb-v" id="tb-afternoon">—</div><div class="tb-bar"><div class="tb-fill" id="tbf-afternoon" style="width:0%"></div></div></div><div class="tb"><div class="tb-t">Evening</div><div class="tb-v" id="tb-evening">—</div><div class="tb-bar"><div class="tb-fill" id="tbf-evening" style="width:0%"></div></div></div></div>
+      </div>
+      <div class="rep-card" style="margin-bottom:10px;padding:13px">
+        <div style="font-size:10px;font-weight:700;color:var(--tx2);letter-spacing:.3px;text-transform:uppercase;margin-bottom:9px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg> Collector Performance Today
+        </div>
+        <div id="collector-list"></div>
+      </div>
+    </div>
+
+    <!-- EXPORT OPTIONS -->
+    <div class="rep-sec-t">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Export &amp; Share
+    </div>
+    <div style="padding:0 clamp(10px,3vw,16px);margin-bottom:12px">
+      <div class="rep-card">
+        <div class="rep-row" onclick="exportTodayPDF()"><div class="rep-row-ico" style="background:var(--redbg)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="rep-row-info"><div class="rep-row-t">Today's Report — PDF</div><div class="rep-row-s">All today's transactions · printable</div></div><div class="rep-row-r"><span class="rep-arr">›</span></div></div>
+        <div class="rep-row" onclick="exportWeekPDF()"><div class="rep-row-ico" style="background:var(--gp)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="rep-row-info"><div class="rep-row-t">Weekly Report — PDF</div><div class="rep-row-s">Day-by-day breakdown · Mon–Sun</div></div><div class="rep-row-r"><span class="rep-arr">›</span></div></div>
+        <div class="rep-row" onclick="exportMonthPDF()"><div class="rep-row-ico" style="background:var(--amberbg)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="rep-row-info"><div class="rep-row-t">Monthly Report — PDF</div><div class="rep-row-s">Week-by-week + payment mode summary</div></div><div class="rep-row-r"><span class="rep-arr">›</span></div></div>
+        <div class="rep-row" onclick="showToast('Opening WhatsApp…')"><div class="rep-row-ico" style="background:#e6f8ee"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="rep-row-info"><div class="rep-row-t">Share via WhatsApp</div><div class="rep-row-s">Send summary to owner / manager</div></div><div class="rep-row-r"><span class="rep-arr">›</span></div></div>
+      </div>
+    </div>
+
+  </div><!-- end rep-screen -->
+  <div class="bottom-nav">
+    <div class="bn" onclick="setBottomNav('home');gotoScreen('screen-home')"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span></div><span class="bn-lbl">Home</span></div>
+    <div class="bn" onclick="openQuickCollect()"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span></div><span class="bn-lbl">Collect</span></div>
+    <div class="bn on"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span></div><span class="bn-lbl">Reports</span></div>
+    <div class="bn" onclick="gotoScreen('screen-settings')"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span></div><span class="bn-lbl">Settings</span></div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="screen" id="screen-settings" style="flex-direction:column">
+  <div class="topbar"><div class="back-btn" onclick="gotoScreen('screen-home');setBottomNav('home')">←</div><div class="tb-logo" style="font-size:15px" data-en="Settings" data-ta="அமைப்புகள்">Settings</div></div>
+  <div class="sett-screen">
+    <div class="sett-profile"><div class="sett-ava">SK</div><div><div class="sett-name">Senthil Kumar</div><div class="sett-co">Vasu Finance · Coimbatore</div><div class="sett-plan" id="role-plan-display"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2 20h20"/><path d="M4 20L6 8l6 6 6-10 2 16"/></svg> Owner Account</div></div></div>
+    <div class="sett-grid-cols">
+      <div class="sett-card"><div class="sett-card-t" data-en="Language" data-ta="மொழி">Language</div><div class="sett-lang-row"><div><div class="sett-rt" data-en="App Language" data-ta="பயன்பாட்டு மொழி">App Language</div><div class="sett-rs" data-en="Tamil or English interface" data-ta="தமிழ் அல்லது ஆங்கில இடைமுகம்">Tamil or English interface</div></div><div class="lang-toggle"><div class="lt-opt on" id="lt-en-sett" onclick="setLang('en')">EN</div><div class="lt-opt" id="lt-ta-sett" onclick="setLang('ta')">தமிழ்</div></div></div></div>
+      <div class="sett-card"><div class="sett-card-t" data-en="Account" data-ta="கணக்கு">Account</div>
+        <div class="sett-row" onclick="showToast('Editing profile…')"><div class="sett-ico" style="background:var(--gp)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="sett-info"><div class="sett-rt" data-en="Profile" data-ta="சுயவிவரம்">Profile</div><div class="sett-rs" data-en="Name, phone, address" data-ta="பெயர், மொபைல், முகவரி">Name, phone, address</div></div><div class="sett-rr">›</div></div>
+        <div class="sett-row" onclick="showToast('Company code: VASU2024')"><div class="sett-ico" style="background:var(--amberbg)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><line x1="9" y1="11" x2="9" y2="11"/><line x1="15" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="9" y2="15"/><line x1="15" y1="15" x2="15" y2="15"/></svg></div><div class="sett-info"><div class="sett-rt" data-en="Company Code" data-ta="நிறுவன குறியீடு">Company Code</div><div class="sett-rs" data-en="Share with field agents" data-ta="களப்பணியாளர்களுடன் பகிர்வு">Share with field agents</div></div><div class="sett-rr">VASU2024</div></div>
+        <div class="sett-row" onclick="showToast('3 agents active')"><div class="sett-ico" style="background:var(--gp)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="sett-info"><div class="sett-rt" data-en="My Agents / Staff" data-ta="என்னுடைய முகவர்கள்">My Agents / Staff</div><div class="sett-rs" data-en="Manage collectors" data-ta="வசூலாளர்களை நிர்வகிக்கவும்">Manage collectors</div></div><div class="sett-rr">3 active ›</div></div>
+      </div>
+      <div class="sett-card"><div class="sett-card-t" data-en="Notifications" data-ta="அறிவிப்புகள்">Notifications</div>
+        <div class="sett-row"><div class="sett-ico" style="background:var(--embg)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><div class="sett-info"><div class="sett-rt" data-en="WhatsApp Reminders" data-ta="வாட்சாப் நினைவூட்டல்கள்">WhatsApp Reminders</div><div class="sett-rs" data-en="Auto-send before due date" data-ta="நிலுவை தேதிக்கு முன் தானாக அனுப்பு">Auto-send before due date</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="sett-row"><div class="sett-ico" style="background:var(--gp)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><div class="sett-info"><div class="sett-rt" data-en="Due Date Alerts" data-ta="நிலுவை தேதி எச்சரிக்கைகள்">Due Date Alerts</div><div class="sett-rs" data-en="Morning alert at 8 AM" data-ta="காலை 8 மணிக்கு எச்சரிக்கை">Morning alert at 8 AM</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="sett-row"><div class="sett-ico" style="background:var(--gp)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="sett-info"><div class="sett-rt" data-en="Daily Summary to Owner" data-ta="உரிமையாளருக்கு தினசரி சுருக்கம்">Daily Summary to Owner</div><div class="sett-rs" data-en="End-of-day report at 8 PM" data-ta="மாலை 8 மணிக்கு தினசரி அறிக்கை">End-of-day report at 8 PM</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    </div>
+      <div class="sett-card"><div class="sett-card-t" data-en="Data &amp; Backup" data-ta="தரவு &amp; காப்புப்பிரதி">Data &amp; Backup</div>
+        <div class="sett-row" onclick="showToast('Last backup: Today ✓')"><div class="sett-ico" style="background:var(--gp)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div><div class="sett-info"><div class="sett-rt" data-en="Cloud Backup" data-ta="கிளவுட் காப்புப்பிரதி">Cloud Backup</div><div class="sett-rs" data-en="Auto-synced daily" data-ta="தினசரி தானாக ஒத்திசைவு">Auto-synced daily</div></div><div class="sett-rr">✓ ›</div></div>
+        <div class="sett-row" onclick="showToast('Exporting all data…')"><div class="sett-ico" style="background:var(--amberbg)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg></div><div class="sett-info"><div class="sett-rt" data-en="Export All Data" data-ta="அனைத்து தரவையும் ஏற்றுமதி செய்">Export All Data</div><div class="sett-rs" data-en="Download as Excel / CSV" data-ta="Excel / CSV ஆக பதிவிறக்கவும்">Download as Excel / CSV</div></div><div class="sett-rr">›</div></div>
+      </div>
+      <div class="sett-card"><div class="sett-card-t" data-en="Subscription" data-ta="சந்தா">Subscription</div><div class="sett-row"><div class="sett-ico" style="background:var(--amberbg)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="sett-info"><div class="sett-rt" data-en="Current Plan" data-ta="தற்போதைய திட்டம்">Current Plan</div><div class="sett-rs" data-en="Pro · Valid till July 2026" data-ta="Pro · ஜூலை 2026 வரை செல்லுபடியாகும்">Pro · Valid till July 2026</div></div><div class="sett-rr">Manage ›</div></div></div>
+    </div><!-- end sett-grid-cols -->
+    <div class="sett-card" style="margin-top:4px"><div class="sett-row" onclick="doLogout()"><div class="sett-ico" style="background:var(--redbg)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div><div class="sett-info"><div class="sett-rt danger" data-en="Logout" data-ta="வெளியேறு">Logout</div><div class="sett-rs" data-en="Sign out of this device" data-ta="இந்த சாதனத்திலிருந்து வெளியேறு">Sign out of this device</div></div><div class="sett-rr">›</div></div></div>
+    <div style="text-align:center;padding:14px 0;font-size:11px;color:var(--tx3)">DailyFinance Pro v6.0 · <span data-en="Made with ♥ in Tamil Nadu 🇮🇳" data-ta="தமிழ்நாட்டில் ♥ உடன் உருவாக்கப்பட்டது 🇮🇳">Made with ♥ in Tamil Nadu 🇮🇳</span></div>
+  </div>
+  <div class="bottom-nav">
+    <div class="bn" onclick="setBottomNav('home');gotoScreen('screen-home')"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span></div><span class="bn-lbl" data-en="Home" data-ta="முகப்பு">Home</span></div>
+    <div class="bn" onclick="openQuickCollect()"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span></div><span class="bn-lbl" data-en="Collect" data-ta="வசூல்">Collect</span></div>
+    <div class="bn" onclick="setBottomNav('reports');gotoScreen('screen-reports')"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span></div><span class="bn-lbl" data-en="Reports" data-ta="அறிக்கைகள்">Reports</span></div>
+    <div class="bn on"><div class="bn-ico-bg"><span class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span></div><span class="bn-lbl" data-en="Settings" data-ta="அமைப்புகள்">Settings</span></div>
+  </div>
+</div>
+
+<!-- COLLECTION MODAL — Collect Due style (Image 1) -->
+<div class="coll-modal" id="collect-modal" onclick="closeCollBg(event)">
+<div class="coll-sheet">
+
+  <!-- Dark header -->
+  <div class="cdm-hdr-dark">
+    <div>
+      <div class="sh-h" data-en="Collect due" data-ta="வசூல் செய்">Collect due</div>
+      <div class="sh-sub" data-en="Adjust amount &amp; collect payment" data-ta="தொகையை சரிசெய்து கட்டணம் வசூல் செய்க">Adjust amount &amp; collect payment</div>
+    </div>
+    <div class="sh-x" onclick="closeCollect()">✕</div>
+  </div>
+
+  <div class="sh-body">
+    <!-- Success banner -->
+    <div class="coll-ok" id="coll-ok"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="20 6 9 17 4 12"/></svg></span><span class="coll-ok-txt" id="coll-ok-txt">Collection saved!</span></div>
+
+    <!-- Customer search (shown before selection) -->
+    <div id="cs-section">
+      <div class="cs-lbl" data-en="Select Customer" data-ta="வாடிக்கையாளர் தேர்ந்தெடு">Select Customer</div>
+      <div class="cs-sw"><span class="cs-sico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><input class="cs-sinp" id="customer-search" placeholder="Search name or phone…" oninput="filterCsList()"/></div>
+      <div class="cs-list" id="customer-list"></div>
+    </div>
+
+    <!-- Selected customer card (shown after selection) -->
+    <div class="cdm-cust-card" id="sel-cust-tag" onclick="clearCsSelection()" style="display:none">
+      <div class="cdm-cust-ava" id="sct-ava"></div>
+      <div style="flex:1;min-width:0">
+        <div class="cdm-cust-name" id="sct-name"></div>
+        <div class="cdm-cust-phone"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.47 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <span id="sct-phone"></span></div>
+      </div>
+      <div class="cdm-pending-badge">
+        <div class="cdm-pending-lbl" data-en="Total Pending" data-ta="மொத்த நிலுவை">Total Pending</div>
+        <div class="cdm-pending-val" id="sct-pending">—</div>
+      </div>
+    </div>
+
+    <!-- Amount section label row -->
+    <div class="amt-lbl-row">
+      <span class="amt-sec-lbl" data-en="Amount to Collect" data-ta="வசூல் தொகை">Amount to Collect</span>
+      <div style="display:flex;align-items:center;gap:7px">
+        <span class="amt-due-badge" id="due-count-badge">× 1 due</span>
+        <button class="amt-reset-btn" onclick="resetDue()">↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- Yellow +/- amount row -->
+    <div class="due-amt-row">
+      <button class="due-minus" onclick="changeDue(-1)">
+        <span class="due-sym">−</span>
+        <span class="due-btn-lbl" data-en="1 due" data-ta="1 நிலுவை">1 due</span>
+      </button>
+      <div class="due-amt-center">
+        <input class="due-amt-inp" id="collect-amount" type="number" placeholder="0" min="0" oninput="onDueManualInput()"/>
+      </div>
+      <button class="due-plus" onclick="changeDue(1)">
+        <span class="due-sym">+</span>
+        <span class="due-btn-lbl" data-en="1 due" data-ta="1 நிலுவை">1 due</span>
+      </button>
+    </div>
+
+    <!-- Hint row -->
+    <div class="due-hint-row">
+      <span class="due-hint-txt" data-en="Tap +/− to add or remove one due · Or type any amount" data-ta="+/− தட்டி ஒரு நிலுவையை சேர்க்கவும் அல்லது நீக்கவும்">Tap +/− to add or remove one due · Or type any amount</span>
+      <span class="due-per-lbl" id="due-per-lbl">₹150 / due</span>
+    </div>
+
+    <!-- Payment type -->
+    <div class="pay-type-lbl" data-en="Payment Type" data-ta="கட்டண வகை">Payment Type</div>
+    <div class="pay-type-row">
+      <div class="pay-type-btn sel" id="mode-cash" onclick="selMode('cash')">
+        <span class="pay-type-ico"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+        <div class="pay-type-info">
+          <div class="pay-type-name" data-en="Cash" data-ta="பணம்">Cash</div>
+          <div class="pay-type-sub" data-en="Physical payment" data-ta="நேரடி கட்டணம்">Physical payment</div>
+        </div>
+      </div>
+      <div class="pay-type-btn" id="mode-upi" onclick="selMode('upi')">
+        <span class="pay-type-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
+        <div class="pay-type-info">
+          <div class="pay-type-name">UPI</div>
+          <div class="pay-type-sub" data-en="Digital payment" data-ta="டிஜிட்டல் கட்டணம்">Digital payment</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Collected on date -->
+    <div class="coll-date-row">
+      <span class="coll-date-lbl" data-en="Collected on" data-ta="வசூல் தேதி">Collected on</span>
+      <input class="coll-date-inp" type="date" id="collect-date"/>
+    </div>
+
+    <!-- Footer: Cancel + Collect button -->
+    <div class="coll-footer">
+      <button class="coll-cancel" onclick="closeCollect()" data-en="Cancel" data-ta="ரத்து செய்">Cancel</button>
+      <button class="coll-confirm" onclick="confirmColl()">
+        ✓ <span data-en="Collect" data-ta="வசூல்">Collect</span> <span id="collect-btn-amt">₹0</span>
+      </button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- CDM -->
+<div class="cdm" id="cdm" onclick="closeCDMBg(event)"><div class="cdm-sheet"><div class="cdm-handle"></div>
+  <div class="cdm-hdr"><div class="cdm-t" data-en="Customer Details" data-ta="வாடிக்கையாளர் விவரங்கள்">Customer Details</div><div class="cdm-x" onclick="closeCDM()">✕</div></div>
+  <div class="cdm-body">
+    <div class="cdm-hero"><div class="cdm-ava" id="cdm-ava"></div><div><div class="cdm-name" id="cdm-name"></div><div style="display:inline-flex;align-items:center;gap:5px;margin-bottom:4px"><span style="font-size:10px;font-weight:700;color:var(--g1);background:var(--gp);padding:2px 8px;border-radius:20px;border:1px solid var(--gb)">Chit ID: <span id="cdm-chitid">—</span></span></div><div class="cdm-contact"><div class="cdm-ci"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.47 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <span id="cdm-phone"></span></div><div class="cdm-ci"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> <span id="cdm-addr"></span></div><div class="cdm-ci" id="cdm-arow" style="display:none">🪪 <span id="cdm-aadhaar"></span></div></div></div></div>
+    <div class="cdm-g2"><div class="cdm-box"><div class="cdm-bl" data-en="Loan Amount" data-ta="கடன் தொகை">Loan Amount</div><div class="cdm-bv" id="cdm-loan">₹0</div></div><div class="cdm-box"><div class="cdm-bl" data-en="Paid So Far" data-ta="இதுவரை செலுத்தியது">Paid So Far</div><div class="cdm-bv g" id="cdm-paid">₹0</div></div><div class="cdm-box"><div class="cdm-bl" data-en="Balance Due" data-ta="நிலுவை தொகை">Balance Due</div><div class="cdm-bv r" id="cdm-bal">₹0</div></div><div class="cdm-box"><div class="cdm-bl" data-en="EMI" data-ta="தவணை">EMI</div><div class="cdm-bv" id="cdm-emi">₹0</div></div></div>
+    <div style="margin-bottom:14px"><div class="prog-hdr"><div class="prog-lbl" data-en="Recovery Progress" data-ta="மீட்பு முன்னேற்றம்">Recovery Progress</div><div class="prog-pct" id="cdm-prog-pct">0%</div></div><div class="prog-track"><div class="prog-fill" id="cdm-prog-fill" style="width:0%"></div></div></div>
+    <div class="cdm-loan"><div class="cdm-loan-t" data-en="Loan Details" data-ta="கடன் விவரங்கள்">Loan Details</div><div class="cdm-lrow"><span class="cdm-lk" data-en="Status" data-ta="நிலை">Status</span><span class="cdm-lv" id="cdm-status">—</span></div><div class="cdm-lrow"><span class="cdm-lk" data-en="Interest" data-ta="வட்டி">Interest</span><span class="cdm-lv" id="cdm-interest">—</span></div><div class="cdm-lrow"><span class="cdm-lk" data-en="Frequency" data-ta="அலைவரிசை">Frequency</span><span class="cdm-lv" id="cdm-freq">—</span></div><div class="cdm-lrow"><span class="cdm-lk" data-en="Tenure" data-ta="காலம்">Tenure</span><span class="cdm-lv" id="cdm-tenure">—</span></div><div class="cdm-lrow"><span class="cdm-lk" data-en="Start Date" data-ta="தொடக்க தேதி">Start Date</span><span class="cdm-lv" id="cdm-start">—</span></div><div class="cdm-lrow"><span class="cdm-lk" data-en="Assigned Agent" data-ta="முகவர்">Assigned Agent</span><span class="cdm-lv" id="cdm-agent">—</span></div></div>
+    <div class="cdm-act"><button class="cdm-btn cdm-bg" onclick="openDetailFromCDM()" data-en="Full Profile" data-ta="முழு சுயவிவரம்"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Full Profile</button><button class="cdm-btn cdm-ghost" onclick="closeCDM();openCollectModal()" data-en="Collect Now" data-ta="இப்போது வசூல்"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Collect Now</button></div>
+  </div>
+</div></div>
+
+<!-- REGISTER -->
+<div class="reg-modal" id="reg-modal" onclick="closeRegBg(event)"><div class="reg-sheet"><div style="width:36px;height:4px;border-radius:2px;background:var(--bdr);margin:12px auto 0"></div>
+  <div class="reg-hdr"><div class="reg-t" data-en="Register New Company" data-ta="புதிய நிறுவனத்தை பதிவு செய்க"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><line x1="9" y1="11" x2="9" y2="11"/><line x1="15" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="9" y2="15"/><line x1="15" y1="15" x2="15" y2="15"/></svg> Register New Company</div><div class="reg-x" onclick="closeRegister()">✕</div></div>
+  <div class="reg-body">
+    <div class="reg-info" data-en="After registration, your unique company code will be shared with your staff and agents to log in." data-ta="பதிவு செய்த பிறகு, உங்கள் தனிப்பட்ட நிறுவன குறியீடு உங்கள் பணியாளர்கள் மற்றும் முகவர்களுடன் பகிரப்படும்.">After registration, your unique company code will be shared with your staff and agents to log in.</div>
+    <div class="inpw" style="margin-bottom:0"><label class="inplbl" data-en="Company / Finance Name *" data-ta="நிறுவனம் / நிதி பெயர் *">Company / Finance Name *</label><input class="inp" id="reg-company" placeholder="e.g. Vasu Finance"/></div>
+    <div class="inpw" style="margin-bottom:0"><label class="inplbl" data-en="Owner Name *" data-ta="உரிமையாளர் பெயர் *">Owner Name *</label><input class="inp" id="reg-owner" placeholder="e.g. Senthil Kumar"/></div>
+    <div class="inpw" style="margin-bottom:0"><label class="inplbl" data-en="City / Location *" data-ta="நகரம் / இடம் *">City / Location *</label><input class="inp" id="reg-city" placeholder="e.g. Coimbatore"/></div>
+    <div class="inpw" style="margin-bottom:0"><label class="inplbl" data-en="Mobile Number *" data-ta="மொபைல் எண் *">Mobile Number *</label><input class="inp" id="reg-mobile" placeholder="98765 43210" type="tel"/></div>
+    <div class="inpw" style="margin-bottom:0"><label class="inplbl" data-en="Choose Company Code *" data-ta="நிறுவன குறியீடு தேர்ந்தெடு *">Choose Company Code *</label><input class="inp" id="reg-code" placeholder="e.g. VASU2024" autocomplete="off" oninput="this.value=this.value.toUpperCase().replace(/\s/g,'')"/></div>
+    <div class="inpw" style="margin-bottom:0"><label class="inplbl"> Owner Password * <span style="font-size:10px;color:var(--tx3)">(min 6 chars — keep it safe)</span></label><div style="position:relative"><input class="inp" id="reg-pin" placeholder="Set a secure password" type="password" autocomplete="new-password"/><button onclick="togglePwVis('reg-pin','reg-pin-eye')" id="reg-pin-eye" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:14px;color:var(--tx3)"></button></div></div>
+    <div class="inpw" style="margin-bottom:0"><label class="inplbl"> Confirm Password *</label><div style="position:relative"><input class="inp" id="reg-pin2" placeholder="Re-enter password" type="password" autocomplete="new-password"/><button onclick="togglePwVis('reg-pin2','reg-pin2-eye')" id="reg-pin2-eye" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:14px;color:var(--tx3)"></button></div></div>
+    <button class="btn-g" onclick="doRegister()" data-en="✓ Create Company Account" data-ta="✓ நிறுவன கணக்கை உருவாக்கு">✓ Create Company Account</button>
+  </div>
+</div></div>
+
+<!-- ALL COMPANIES -->
+<div class="csel-modal" id="csel-modal" onclick="closeCselBg(event)"><div class="csel-sheet"><div style="width:36px;height:4px;border-radius:2px;background:var(--bdr);margin:12px auto 0"></div>
+  <div class="csel-hdr"><div class="reg-t" data-en="Registered Companies" data-ta="பதிவு செய்யப்பட்ட நிறுவனங்கள்"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><line x1="9" y1="11" x2="9" y2="11"/><line x1="15" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="9" y2="15"/><line x1="15" y1="15" x2="15" y2="15"/></svg> Registered Companies</div><div class="reg-x" onclick="closeCsel()">✕</div></div>
+  <div class="csel-body" id="csel-list"></div>
+</div></div>
+
+<!-- AI CHATBOT FAB -->
+<button class="ai-fab" id="ai-fab" onclick="openAIChat()" title="Ask AI Assistant" style="display:none">
+  <div class="ai-fab-pulse"></div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><line x1="8" y1=15 x2="8" y2="15"/><line x1="16" y1=15 x2="16" y2="15"/></svg>
+</button>
+
+<!-- AI CHAT MODAL -->
+<div class="ai-modal" id="ai-modal">
+  <div class="ai-backdrop" onclick="closeAIChat()"></div>
+  <div class="ai-sheet">
+    <div class="ai-handle"></div>
+    <div class="ai-hdr">
+      <div class="ai-hdr-ico"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><line x1="8" y1=15 x2="8" y2="15"/><line x1="16" y1=15 x2="16" y2="15"/></svg></div>
+      <div class="ai-hdr-info">
+        <div class="ai-hdr-title">DailyFinance AI Assistant</div>
+        <div class="ai-hdr-sub">● Online · Ask me anything</div>
+      </div>
+      <button class="ai-close" onclick="closeAIChat()">✕</button>
+    </div>
+    <div class="ai-msgs" id="ai-msgs"></div>
+    <div class="ai-chips" id="ai-chips">
+      <div class="ai-chip" onclick="aiChip('Who has the highest pending balance?')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Top pending</div>
+      <div class="ai-chip" onclick="aiChip('How much have I collected today?')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Today\'s total</div>
+      <div class="ai-chip" onclick="aiChip('List all active borrowers with their balance')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> All borrowers</div>
+      <div class="ai-chip" onclick="aiChip('Which borrowers have paid less than 10% of their loan?')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Overdue risk</div>
+      <div class="ai-chip" onclick="aiChip('Give me a full portfolio summary')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Portfolio summary</div>
+      <div class="ai-chip" onclick="aiChip('How do I add a new borrower?')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> How to add</div>
+    </div>
+    <div class="ai-inp-row">
+      <input class="ai-inp" id="ai-inp" placeholder="Ask a question about the app…" onkeydown="if(event.key==='Enter')sendAIMsg()"/>
+      <button class="ai-send" onclick="sendAIMsg()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
